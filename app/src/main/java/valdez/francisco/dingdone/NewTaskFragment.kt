@@ -43,7 +43,7 @@ class NewTaskFragment : Fragment() {
                 val selected = button.tag == "selected"
                 if (selected) {
                     button.setBackgroundResource(R.drawable.button_outline)
-                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_700))
+                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple))
                     button.tag = "unselected"
                 } else {
                     button.setBackgroundResource(R.drawable.button_enabled)
