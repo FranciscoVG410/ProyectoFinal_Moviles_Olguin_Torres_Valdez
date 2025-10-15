@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:background="@drawable/task_card_bg"
-    android:layout_marginBottom="12dp">
+    android:layout_margin="20dp"
+    android:background="@drawable/rounded_corners_bg"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/taskDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Monday"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="#333" />
+        android:text="day"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/taskTitle"
+        android:id="@+id/taskline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lavar los platos"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_marginTop="4dp" />
+        android:text="_______________________________________"
+        android:textColor="@color/line"
+        android:paddingBottom="10dp"
 
-    <TextView
-        android:id="@+id/taskDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lavar todos los platos que se usaron en la mañana"
-        android:textColor="#555"
-        android:textSize="13sp"
-        android:layout_marginTop="2dp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@drawable/white_rounded_corners_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:text="title"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/taskStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pendiente"
-        android:textColor="#9C27B0"
-        android:textStyle="bold"
-        android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:text="description"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/taskStatus"
+            android:text="status"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+
 </LinearLayout>

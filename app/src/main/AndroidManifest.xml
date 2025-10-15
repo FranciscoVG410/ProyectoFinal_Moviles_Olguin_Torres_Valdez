@@ -31,6 +31,9 @@
             android:name=".JoinHome"
             android:exported="false" />
         <activity
+            android:name=".TasksActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" >
             <intent-filter>

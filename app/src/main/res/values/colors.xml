@@ -9,4 +9,7 @@
     <color name="whitecorner">#FFFFFFFF</color>
     <color name="btnBackground">#722AA2</color>
     <color name="lightPurple">#F3F3F3</color>
+    <color name="lightGray">#F3F3F3</color>
+    <color name="line">#bcbcbc</color>
+
 </resources>

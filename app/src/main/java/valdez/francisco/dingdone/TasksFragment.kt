@@ -22,7 +22,7 @@ class TasksFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_tasks, container, false)
 
-        taskList = view.findViewById(R.id.taskList)
+        taskList = view.findViewById(R.id.recyclerViewTasks)
         emptyText = view.findViewById(R.id.emptyText)
 
         val dummyTasks = listOf(
@@ -49,8 +49,8 @@ class TasksFragment : Fragment() {
 class TaskAdapter(private val tasks: List<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val day: TextView = view.findViewById(R.id.taskDay)
-        val title: TextView = view.findViewById(R.id.taskTitle)
-        val desc: TextView = view.findViewById(R.id.taskDesc)
+        val title: TextView = view.findViewById(R.id.textViewTitle)
+        val desc: TextView = view.findViewById(R.id.textViewDescription)
         val status: TextView = view.findViewById(R.id.taskStatus)
     }
 
