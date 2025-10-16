@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         val email: EditText = findViewById(R.id.etEmail)
         val password : EditText = findViewById(R.id.etPassword)
 
-        users.add(User("Amos Heli", "amospro@gmail.com", "123456"))
+        users.add(User("Amos Heli", "amos", "amos"))
 
         btnLogin.setOnClickListener { 
 

@@ -1,6 +1,5 @@
 package valdez.francisco.dingdone
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -13,7 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class TasksActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var taskAdapter: TaskDateAdapter
     private val allTasks = mutableListOf<Task>()
     private lateinit var buttonsContainer: LinearLayout
 
@@ -26,17 +25,24 @@ class TasksActivity : AppCompatActivity() {
 
         // Create dummy tasks
         val tasks1 = mutableListOf(
-            Task("Monday", "to buy", "Milk, bread, and eggs","pending"),
-            Task("Monday", "work","Complete the quarterly report for work","pending")
+            Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
+            Task("Sacar la basura", "Sacar la basura antes de las 10 porque llega el camión", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Martes", "Completada"),
+            Task("Lavar los carros", "Lavar el Eclipse del Beto porque se enoja si no", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Viernes", "Pendiente"),
+            Task("Revisar el correo", "Lavar correos inventados para probar longitud", listOf(UserData("Juan"), UserData("Amos")), "Viernes", "Pendiente")
         )
 
         val tasks2 = mutableListOf(
-            Task("Tuesday", "groceries","Buy groceries", "pending"),
-            Task("Tuesday", "birthday","go buy a present for my birthday","pending")
+            Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
+            Task("Sacar la basura", "Sacar la basura antes de las 10 porque llega el camión", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
+            Task("Lavar los carros", "Lavar el Eclipse del Beto porque se enoja si no", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Pendiente"),
+            Task("Revisar el correo", "Lavar correos inventados para probar longitud", listOf(UserData("Juan"), UserData("Amos")), "Lunes", "Pendiente")
         )
 
         val tasks3 = mutableListOf(
-            Task("Wednesday", "gym", "Go to the gym", "pending")
+            Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
+            Task("Sacar la basura", "Sacar la basura antes de las 10 porque llega el camión", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
+            Task("Lavar los carros", "Lavar el Eclipse del Beto porque se enoja si no", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Pendiente"),
+            Task("Revisar el correo", "Lavar correos inventados para probar longitud", listOf(UserData("Juan"), UserData("Amos")), "Lunes", "Pendiente")
         )
 
         val homeButtonTitles = listOf("home1", "home2", "home3")
@@ -64,8 +70,7 @@ class TasksActivity : AppCompatActivity() {
             }
             buttonsContainer.addView(button)
         }
-
-        taskAdapter = TaskAdapter(allTasks, this)
+        taskAdapter = TaskDateAdapter(emptyList())
         recyclerView.adapter = taskAdapter
 
         // Show the first list of tasks by default
@@ -86,6 +91,19 @@ class TasksActivity : AppCompatActivity() {
     private fun updateTasks(tasks: List<Task>) {
         allTasks.clear()
         allTasks.addAll(tasks)
-        taskAdapter.notifyDataSetChanged()
+        val groupedTasks: Map<String, List<Task>> = allTasks.groupBy { it.date }
+
+        val items = mutableListOf<TaskListItem>()
+        val weekDays = listOf("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")
+
+        for (day in weekDays) {
+            val dayTasks = groupedTasks[day]
+            if (!dayTasks.isNullOrEmpty()) {
+                // Solo mostrar la fecha si tiene tareas
+                items.add(TaskListItem.Header(day))
+                items.addAll(dayTasks.map { TaskListItem.TaskItem(it) })
+            }
+        }
+        taskAdapter.updateItem(items)
     }
 }
