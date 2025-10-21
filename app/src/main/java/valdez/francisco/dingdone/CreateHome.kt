@@ -23,6 +23,7 @@ class CreateHome : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
+        bottomNavigationView.itemIconTintList = null
         tvRandomCode.text = generateRandomCode()
 
 
@@ -44,14 +45,16 @@ class CreateHome : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.btnNav_tasks -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.btnCreateAccount, TasksFragment())
-                        .commit()
+                    startActivity(Intent(this, TasksActivity::class.java))
 
                     true
                 }
                 R.id.btnNav_config -> {
                     startActivity(Intent(this, HomeConfiguration::class.java))
+                    true
+                }
+                R.id.btnNavGraphs -> {
+                    startActivity(Intent(this, GraphsActivity::class.java))
                     true
                 }
                 else -> false

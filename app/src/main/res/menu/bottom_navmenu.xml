@@ -4,10 +4,16 @@
     <item
         android:id="@+id/btnNav_tasks"
         android:title="Tasks"
-        android:icon="@drawable/outline_checklist_24"/>
+        android:icon="@drawable/tasksvector"/>
+
+    <item
+        android:id="@+id/btnNavGraphs"
+        android:title="Graphics"
+        android:icon="@drawable/graphs__2_"/>
 
     <item
         android:id="@+id/btnNav_config"
         android:title="Config"
-        android:icon="@drawable/settings"/>
+        android:icon="@drawable/settings__2_"/>
+
 </menu>

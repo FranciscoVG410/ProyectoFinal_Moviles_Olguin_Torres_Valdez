@@ -1,5 +1,6 @@
 package valdez.francisco.dingdone
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TasksActivity : AppCompatActivity() {
@@ -19,6 +21,10 @@ class TasksActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        bottomNavigationView.itemIconTintList = null
 
         recyclerView = findViewById(R.id.recyclerViewTasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -84,6 +90,24 @@ class TasksActivity : AppCompatActivity() {
                 replace(R.id.fragment_container, fragment)
                 addToBackStack(null)
                 commit()
+            }
+        }
+
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.btnNav_tasks -> true
+
+                R.id.btnNavGraphs -> {
+                    startActivity(Intent(this, GraphsActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.btnNav_config -> {
+                    startActivity(Intent(this, Configuration::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                else -> false
             }
         }
     }
