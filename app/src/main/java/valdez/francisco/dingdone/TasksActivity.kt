@@ -2,6 +2,7 @@ package valdez.francisco.dingdone
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +18,17 @@ class TasksActivity : AppCompatActivity() {
     private lateinit var taskAdapter: TaskDateAdapter
     private val allTasks = mutableListOf<Task>()
     private lateinit var buttonsContainer: LinearLayout
+    private lateinit var tasknueva: Task
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+//
+//        if(task!=null){
+//
+//            tasks1.add(Task(task.nombre, task.descripcio, task.member, task.date, task.state))
+//
+//        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
 
@@ -28,14 +38,37 @@ class TasksActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewTasks)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val tasks1 = mutableListOf<Task>()
 
-        // Create dummy tasks
-        val tasks1 = mutableListOf(
-            Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),
-            Task("Sacar la basura", "Sacar la basura antes de las 10 porque llega el camión", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Martes", "Completada"),
-            Task("Lavar los carros", "Lavar el Eclipse del Beto porque se enoja si no", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Viernes", "Pendiente"),
-            Task("Revisar el correo", "Lavar correos inventados para probar longitud", listOf(UserData("Juan"), UserData("Amos")), "Viernes", "Pendiente")
-        )
+////        var nuevaTarea = Task("", "", listOf<UserData>(), "", "")
+//        var task = intent.getParcelableExtra<Task>("newTask")
+//        task?.let {
+//
+//
+//            tasknueva = Task(it.nombre, it.descripcio, it.member, it.date, it.state)
+//            tasks1.add(it)
+//            Log.d("TaskReceived", "Nombre: ${it.nombre}, Miembros: ${it.member.size}")
+//
+//
+//
+//        }
+//        // Create dummy tasks
+//        if(tasknueva != null){
+//
+//            tasks1.add(tasknueva)
+//
+//        }else {
+//
+//            tasknueva = Task("Lavar cosas feas", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada")
+//            tasks1.add(Task("Lavar cosas feas", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"))
+
+//        }
+
+        tasks1.add(Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"))
+        tasks1.add(Task("Sacar la basura", "Sacar la basura antes de las 10 porque llega el camión", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Martes", "Completada"))
+        tasks1.add(Task("Lavar los carros", "Lavar el Eclipse del Beto porque se enoja si no", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Viernes", "Pendiente"))
+        tasks1.add(Task("Revisar el correo", "Lavar correos inventados para probar longitud", listOf(UserData("Juan"), UserData("Amos")), "Viernes", "Pendiente"))
+
 
         val tasks2 = mutableListOf(
             Task("Lavar platos", "Lavar todos los platos que se usaron en la mañana", listOf(UserData("Juan"), UserData("Francisco"), UserData("Victor")), "Lunes", "Completada"),

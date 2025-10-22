@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:id="@+id/custome_toast"
+    android:background="@drawable/bg_toast_fail"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_fail"
+        app:tint="@color/red"
+        android:layout_marginHorizontal="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTextToastF"
+        android:text="ACCION"
+        android:textColor="@color/red"
+        android:textSize="16sp"/>
+
+</LinearLayout>

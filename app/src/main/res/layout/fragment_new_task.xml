@@ -86,13 +86,13 @@
             android:layout_marginTop="4dp">
 
             <!-- Days -->
-            <Button android:text="Mon" />
-            <Button android:text="Tue" />
-            <Button android:text="Wed" />
-            <Button android:text="Thu" />
-            <Button  android:text="Fri" />
-            <Button  android:text="Sat" />
-            <Button android:text="Sun" />
+            <Button android:id="@+id/btnMon" android:text="Mon" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnTue" android:text="Tue" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnWen" android:text="Wed" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnThu" android:text="Thu" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnFri" android:text="Fri" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnSat" android:text="Sat" android:background="@drawable/button_outline"/>
+            <Button android:id="@+id/btnSun" android:text="Sun" android:background="@drawable/button_outline"/>
         </GridLayout>
 
         <TextView

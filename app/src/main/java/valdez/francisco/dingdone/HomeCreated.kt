@@ -19,7 +19,7 @@ class HomeCreated : AppCompatActivity() {
 
         btnGoHome.setOnClickListener {
             //Cambiar que en vez del mainActivity te mande a las tasks directamente
-            startActivity(Intent(this, Configuration::class.java))
+            startActivity(Intent(this, TasksActivity::class.java))
         }
     }
 }
