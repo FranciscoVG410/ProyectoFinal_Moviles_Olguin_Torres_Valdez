@@ -3,6 +3,7 @@ package valdez.francisco.dingdone
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,8 @@ class NewTaskFragment : Fragment() {
 
         // Handle day selection
         dayButtons.forEach { button ->
+            Log.d("Dias", button.text.toString())
+
             button.setOnClickListener {
                 dayButtons.forEach { other ->
                     other.setBackgroundResource(R.drawable.button_outline)
@@ -55,6 +58,7 @@ class NewTaskFragment : Fragment() {
                 button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 button.tag = "selected"
                 date = button.text.toString()
+
 
 //                else {
 //                    button.setBackgroundResource(R.drawable.button_enabled)
@@ -138,9 +142,26 @@ class NewTaskFragment : Fragment() {
         }
     }
 
+    fun date(date: String): String{
+
+        return when(date){
+
+            "Mon" -> "Lunes"
+            "Tue" -> "Martes"
+            "Wed" -> "Miercoles"
+            "Thu" -> "Jueves"
+            "Fri" -> "Viernes"
+            "Sat" -> "Sabado"
+            "Sun" -> "Domingo"
+            else -> "Desconocido"
+
+        }
+
+    }
+
     fun createTask(): Task{
 
-        return Task(taskName.text.toString(), taskDesc.text.toString(), userList, date, "Pendiente")
+        return Task(taskName.text.toString(), taskDesc.text.toString(), userList, date(date), "Pendiente")
 
     }
 }
