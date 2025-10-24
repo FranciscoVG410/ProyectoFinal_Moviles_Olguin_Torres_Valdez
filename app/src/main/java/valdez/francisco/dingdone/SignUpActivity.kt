@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var layoutFail: View
     private lateinit var layoutSucces: View
     private lateinit var textFail: TextView
@@ -40,6 +42,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
 
         etNombre = findViewById(R.id.etRName)
         etEmail = findViewById(R.id.etREmail)
@@ -85,7 +88,7 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            signIn(email, password)
+            signIn(name, email, password)
         }
 
         btnBackLogin.setOnClickListener {
@@ -93,7 +96,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun signIn(email: String, password: String) {
+    private fun signIn(name: String, email: String, password: String) {
         Log.d("INFO", "email: $email, password: $password")
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -104,23 +107,60 @@ class SignUpActivity : AppCompatActivity() {
                     toast.duration = Toast.LENGTH_SHORT
                     toast.view = layoutSucces
                     toast.show()
-
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
+                    val user = auth.currentUser
+                    user?.let {
+                        saveUserToFirestore(it.uid, name, email)
+                    }
 
                 } else {
                     Log.w("FAILURE", "createUserWithEmail:failure", task.exception)
 
-                    textFail.text = "Authentication failed: ${task.exception?.message}"
-                    toast.duration = Toast.LENGTH_LONG
+                    textFail.text = "Account creation failed: ${task.exception?.message}"
+                    toast.duration = Toast.LENGTH_SHORT
                     toast.view = layoutFail
                     toast.show()
 
-                    etEmail.setBackgroundResource(R.drawable.edittext_bg_error)
-                    etPassword.setBackgroundResource(R.drawable.edittext_bg_error)
+//                    Toast.makeText(
+//                        baseContext,
+//                        "Authentication failed: ${task.exception?.message}",
+//                        Toast.LENGTH_LONG // Use long for better readability of error
+//                    ).show()
                 }
+            }
+    }
+
+    private fun saveUserToFirestore(userId: String, name: String, email: String) {
+        val user = hashMapOf(
+            "name" to name,
+            "email" to email
+        )
+
+        db.collection("users")
+            .document(userId)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("SUCCESS", "User saved")
+
+                textSuccess.text = "Account created successfully!"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = layoutSucces
+                toast.show()
+
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Log.w("FAILURE", "Error saving user", e)
+
+                textFail.text = "Authentication failed: ${e.message}"
+                toast.duration = Toast.LENGTH_LONG
+                toast.view = layoutFail
+                toast.show()
+
+                etEmail.setBackgroundResource(R.drawable.edittext_bg_error)
+                etPassword.setBackgroundResource(R.drawable.edittext_bg_error)
             }
     }
 }
