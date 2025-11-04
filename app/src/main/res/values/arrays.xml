@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="members_list">
+        <item>Amós</item>
+        <item>Biccs</item>
+        <item>Victor</item>
+        <item>Ana</item>
+    </string-array>
+</resources>

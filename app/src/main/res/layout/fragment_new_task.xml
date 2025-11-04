@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@color/purple"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Task"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="creating a new task"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:text="Task name"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ex: Drop the trash"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_marginTop="12dp"
+            android:text="Description"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/taskDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ex: Drop the trash"
+            android:background="@drawable/edittext_bg"
+            android:minHeight="80dp"
+            android:padding="12dp" />
+
+        <TextView
+            android:layout_marginTop="12dp"
+            android:text="Days"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <GridLayout
+            android:id="@+id/daysContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:layout_marginTop="4dp">
+
+            <!-- Days -->
+            <Button android:text="Mon" />
+            <Button android:text="Tue" />
+            <Button android:text="Wed" />
+            <Button android:text="Thu" />
+            <Button  android:text="Fri" />
+            <Button  android:text="Sat" />
+            <Button android:text="Sun" />
+        </GridLayout>
+
+        <TextView
+            android:layout_marginTop="12dp"
+            android:text="Members"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/memberSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/members_list"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Chips container -->
+        <LinearLayout
+            android:id="@+id/chipsContainer"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/saveButton"
+            android:text="Save changes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:background="@drawable/button_disabled"
+            android:textColor="#FFF"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/backButton"
+            android:text="Back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_outline"
+            android:textColor="#6A1B9A"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+</ScrollView>
