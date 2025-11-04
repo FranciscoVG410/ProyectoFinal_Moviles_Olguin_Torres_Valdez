@@ -1,3 +1,7 @@
 package valdez.francisco.dingdone
 
-data class UserData(val nombre : String)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class UserData(val nombre : String): Parcelable

@@ -94,7 +94,7 @@
 
         <Button
             android:id="@+id/btnRegister"
-            android:text="Don't have an account? !Sing Up¡"
+            android:text="Don't have an account? Sign Up!"
             android:textAllCaps="false"
             android:background="@android:color/transparent"
             android:textColor="@color/blue"

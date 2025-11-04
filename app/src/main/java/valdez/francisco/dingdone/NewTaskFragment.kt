@@ -1,10 +1,14 @@
 package valdez.francisco.dingdone
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
@@ -16,6 +20,8 @@ class NewTaskFragment : Fragment() {
     private lateinit var memberSpinner: Spinner
     private lateinit var chipsContainer: LinearLayout
     private lateinit var dayButtons: List<Button>
+    private val userList = mutableListOf<UserData>()
+    private var date: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,17 +45,26 @@ class NewTaskFragment : Fragment() {
 
         // Handle day selection
         dayButtons.forEach { button ->
+            Log.d("Dias", button.text.toString())
+
             button.setOnClickListener {
-                val selected = button.tag == "selected"
-                if (selected) {
-                    button.setBackgroundResource(R.drawable.button_outline)
-                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple))
-                    button.tag = "unselected"
-                } else {
-                    button.setBackgroundResource(R.drawable.button_enabled)
-                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                    button.tag = "selected"
+                dayButtons.forEach { other ->
+                    other.setBackgroundResource(R.drawable.button_outline)
+                    other.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple))
+                    other.tag = "unselected"
                 }
+
+                button.setBackgroundResource(R.drawable.button_enabled)
+                button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                button.tag = "selected"
+                date = button.text.toString()
+
+
+//                else {
+//                    button.setBackgroundResource(R.drawable.button_enabled)
+//                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+//                    button.tag = "selected"
+//                }
                 checkFormState()
             }
         }
@@ -71,32 +86,52 @@ class NewTaskFragment : Fragment() {
         taskName.setOnFocusChangeListener { _, _ -> checkFormState() }
         taskDesc.setOnFocusChangeListener { _, _ -> checkFormState() }
 
+        saveButton.setOnClickListener{
+
+            checkFormState()
+
+            var intent = Intent(requireContext(), TasksActivity::class.java)
+            intent.putExtra("newTask", createTask())
+            startActivity(intent)
+
+        }
+
         return view
     }
 
     private fun addChip(name: String) {
+
+        if (userList.any { it.nombre == name }) return
         val chip = TextView(requireContext()).apply {
             text = "$name ✕"
             setPadding(24, 8, 24, 8)
             setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             background = ContextCompat.getDrawable(requireContext(), R.drawable.button_enabled)
-            setOnClickListener { chipsContainer.removeView(this) }
+            setOnClickListener {
+                chipsContainer.removeView(this)
+                userList.removeIf { it.nombre == name }
+                checkFormState()
+            }
             val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             params.setMargins(8, 0, 8, 0)
             layoutParams = params
         }
         chipsContainer.addView(chip)
+        userList.add(UserData(name))
+        checkFormState()
     }
 
     private fun checkFormState() {
         val valid = taskName.text.isNotBlank() && taskDesc.text.isNotBlank()
         val anyDaySelected = dayButtons.any { it.tag == "selected" }
+        val anyNameInChips = chipsContainer.childCount > 0
 
-        if (valid && anyDaySelected) {
+        if (valid && anyDaySelected && anyNameInChips) {
             saveButton.isEnabled = true
             saveButton.setBackgroundResource(R.drawable.button_enabled)
             taskName.setBackgroundResource(R.drawable.edittext_bg)
             taskDesc.setBackgroundResource(R.drawable.edittext_bg)
+
         } else {
             saveButton.isEnabled = false
             saveButton.setBackgroundResource(R.drawable.button_disabled)
@@ -105,5 +140,28 @@ class NewTaskFragment : Fragment() {
                 taskDesc.setBackgroundResource(R.drawable.edittext_bg_error)
             }
         }
+    }
+
+    fun date(date: String): String{
+
+        return when(date){
+
+            "Mon" -> "Lunes"
+            "Tue" -> "Martes"
+            "Wed" -> "Miercoles"
+            "Thu" -> "Jueves"
+            "Fri" -> "Viernes"
+            "Sat" -> "Sabado"
+            "Sun" -> "Domingo"
+            else -> "Desconocido"
+
+        }
+
+    }
+
+    fun createTask(): Task{
+
+        return Task(taskName.text.toString(), taskDesc.text.toString(), userList, date(date), "Pendiente")
+
     }
 }

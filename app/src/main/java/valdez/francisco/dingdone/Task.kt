@@ -1,3 +1,7 @@
 package valdez.francisco.dingdone
 
-data class Task(val nombre: String, val descripcio: String, val member: List<UserData>, val date: String, val state: String)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Task(var nombre: String, var descripcio: String, var member: List<UserData>, var date: String, var state: String): Parcelable

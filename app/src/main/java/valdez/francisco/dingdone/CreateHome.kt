@@ -2,16 +2,31 @@ package valdez.francisco.dingdone
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.random.Random
 
 class CreateHome : AppCompatActivity() {
 
+    private lateinit var layoutFail: View
+    private lateinit var layoutSucces: View
+    private lateinit var textFail: TextView
+    private lateinit var textSuccess: TextView
+    private lateinit var toast: Toast
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val inflate = layoutInflater
+        layoutFail = inflate.inflate(R.layout.custome_toast_fail, null)
+        layoutSucces = inflate.inflate(R.layout.custome_toast_success, null)
+        textFail = layoutFail.findViewById(R.id.txtTextToastF)
+        textSuccess = layoutSucces.findViewById(R.id.txtTextToastS)
+        toast = Toast(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_home)
@@ -29,6 +44,11 @@ class CreateHome : AppCompatActivity() {
 
         btnCreate.setOnClickListener {
             if (etHomeName.text.toString().isEmpty()) {
+
+                textFail.text = "Please enter a name for the family"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = layoutFail
+                toast.show()
                 etHomeName.setBackgroundResource(R.drawable.error_rounded_edit_text)
             } else {
                 val code = tvRandomCode.text.toString()
