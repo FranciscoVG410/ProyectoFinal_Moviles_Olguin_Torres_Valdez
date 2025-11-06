@@ -21,7 +21,7 @@ class NewTaskFragment : Fragment() {
     private lateinit var chipsContainer: LinearLayout
     private lateinit var dayButtons: List<Button>
     private val userList = mutableListOf<UserData>()
-    private var date: String = ""
+    private val selectedDays = mutableSetOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,28 +49,28 @@ class NewTaskFragment : Fragment() {
         val members = resources.getStringArray(R.array.members_list)
         memberSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, members)
 
-        // Handle day selection
+        // Handle day selection - allow multiple selection
         dayButtons.forEach { button ->
             Log.d("Dias", button.text.toString())
+            button.tag = "unselected" // Initialize tag
 
             button.setOnClickListener {
-                dayButtons.forEach { other ->
-                    other.setBackgroundResource(R.drawable.button_outline)
-                    other.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple))
-                    other.tag = "unselected"
+                val day = button.text.toString()
+                
+                if (button.tag == "selected") {
+                    // Deselect
+                    button.setBackgroundResource(R.drawable.button_outline)
+                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple))
+                    button.tag = "unselected"
+                    selectedDays.remove(day)
+                } else {
+                    // Select
+                    button.setBackgroundResource(R.drawable.button_enabled)
+                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    button.tag = "selected"
+                    selectedDays.add(day)
                 }
-
-                button.setBackgroundResource(R.drawable.button_enabled)
-                button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                button.tag = "selected"
-                date = button.text.toString()
-
-
-//                else {
-//                    button.setBackgroundResource(R.drawable.button_enabled)
-//                    button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-//                    button.tag = "selected"
-//                }
+                
                 checkFormState()
             }
         }
@@ -173,8 +173,10 @@ class NewTaskFragment : Fragment() {
     }
 
     fun createTask(): Task{
-
-        return Task(taskName.text.toString(), taskDesc.text.toString(), userList, date(date), "Pendiente")
+        // Convert selected days to Spanish and join with commas
+        val daysInSpanish = selectedDays.map { date(it) }.joinToString(", ")
+        
+        return Task(taskName.text.toString(), taskDesc.text.toString(), userList, daysInSpanish, "Pendiente")
 
     }
 }
