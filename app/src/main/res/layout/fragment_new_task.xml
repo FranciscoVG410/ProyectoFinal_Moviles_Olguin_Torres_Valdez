@@ -9,8 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:paddingTop="16dp"
+        android:layout_height="100dp"
+        android:paddingTop="26dp"
         android:background="@color/purple"
         >
 
@@ -24,11 +24,12 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_back"
             android:contentDescription="Back"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="26dp"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:gravity="center_vertical">
